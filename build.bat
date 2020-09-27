@@ -6,7 +6,10 @@ mkdir tmp
 xcopy /e src tmp
 copy .latexmkrc tmp
 cd tmp
-pandoc --filter pandoc-crossref --top-level-division=section -M "crossrefYaml=templates\config.yml" report.md -o main.tex
+pandoc --filter pandoc-crossref ^
+--top-level-division=section ^
+-M "crossrefYaml=templates\config.yml" ^
+report.md -o main.tex
 move templates\template.tex .\
 latexmk template
 python .\templates\merger.py cover.pdf template.pdf output.pdf

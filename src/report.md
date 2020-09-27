@@ -284,11 +284,14 @@ mkdir tmp
 xcopy /e src tmp
 copy .latexmkrc tmp
 cd tmp
-pandoc --filter pandoc-crossref --top-level-division=section -M "crossrefYaml=templates\config.yml" report.md -o main.tex
+pandoc --filter pandoc-crossref ^
+--top-level-division=section ^
+-M "crossrefYaml=templates\config.yml" ^
+report.md -o main.tex
 move templates\template.tex .\
 latexmk template
-python .\templates\merger.py cover.pdf template.pdf template.pdf
-move template.pdf %PROJECT_DIR%/dest/output.pdf
+python .\templates\merger.py cover.pdf template.pdf output.pdf
+move output.pdf %PROJECT_DIR%/dest/output.pdf
 cd %PROJECT_DIR%
 rd /S /Q tmp
 endlocal
@@ -299,7 +302,7 @@ pause
 
 1. 作業用に`tmp`フォルダを作成し、`src`フォルダ内のファイルを全部コピー
 2. `tmp`フォルダ内でコンパイル
-3. 12行目:表紙PDFが指定されている場合、`merger.py`でPDFの結合を行う 必要なかったら`rem`でコメントアウトするか消す
+3. 表紙PDFが指定されている場合、`merger.py`でPDFの結合を行う 必要なかったら`rem`でコメントアウトするか消す
 4. 生成された`output.pdf`だけ出力用フォルダの`dest`に移動して、`tmp`フォルダは削除
 
 といった感じです。これで`dest`にできたてほかほかの`output.pdf`が産まれます。
