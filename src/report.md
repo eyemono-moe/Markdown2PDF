@@ -1,11 +1,6 @@
-こんにちは、@d_etteiu8383です。この記事はtraP夏のブログリレー9月30日の記事です。
+こんにちは、\@d_etteiu8383です。この記事はtraP夏のブログリレー9月30日の記事です。
 この記事では私のレポート制作環境(PandocとLatexmkを使ったPDF作成の自動化)の紹介をします。
 既に似た内容の記事が多く存在するため新規性の無い記事ではありますが、皆さんの参考になったら幸いです。
-
-<!-- 書き方メモ
-- 画像　![キャプション](.img/hoge.pdf){#fig:hoge width=10cm}
-- 見出しに章番号をつけたくない時　　# 見出し{-}
--->
 
 \tableofcontents \newpage
 
@@ -24,14 +19,12 @@
 レポートに追われながら書いているので(特に後半)かなり雑な記事になってしまっています。わかりづらい点などありましたらコメントで教えてもらえるとありがたいです。レポート倒したら必ず更新しに来ます。
 :::
 
-## この記事に書いてあること{-}
+## 環境 {-}
 
-- 私のレポート制作手順の説明
-- 環境構築にあたって参考にさせていただいたサイト
-
-## 環境
-
-- Windows
+- Windows10
+- Pandoc 2.10.1
+- pandoc-crossref-Windows-2.10.1
+- TeXLive 2020
 
 # 原理
 
@@ -41,6 +34,7 @@
 2. BibTeXで文献情報をまとめる
 3. Pandocで1のMarkdownファイルをtexファイルに変換する
 4. 3のtexファイルからLatexmkを使ってPDFを作成する
+5. (表紙PDFが指定されている場合)Pythonで表紙PDFと結合
 
 以下で各手順の概要を説明します。環境構築や実際に作成するファイルの内容は[@sec:houhou]で紹介します。
 
@@ -73,7 +67,7 @@ Pandocは以下のような手順で文書を変換しています。(<https://g
 
 まずPandocは入力された変換前の文書を、**リーダー**というプログラムを用いて**抽象構文木**(abstract syntax tree, AST)と呼ばれる形式に変換します。抽象構文木についておおざっぱに説明すると「もとの文章の意味を保持したまま、その各要素を種類によって区別し(見出しなのか？本文なのか？表なのか？図なのか？など)、いい感じに整理整頓したもの」といった感じ。次に**ライター**というプログラムを用い、この抽象構文木を指定の出力形式に変換します。つまりPandocは入力文書を直接出力形式に変換しているのではなく、一度汎用的な形式に変換してから再度目的形式に変換する、という二度の変換を行っています。リーダーとライターを分けているので、新しい形式を利用したい場合は必要なリーダー/ライターを追加するだけで対応できるようになっています。クレバー。
 
-![Pandocの変換動作例](./img/pandoc_description.pdf){#fig:pandoc_description}
+![Pandocの変換動作例](./img/pandoc_description.png){#fig:pandoc_description}
 
 ### Pandoc-crossrefによる相互参照 {#sec:cross-ref}
 
@@ -83,7 +77,7 @@ Pandocは以下のような手順で文書を変換しています。(<https://g
 
 具体的には[@fig:pandoc_filter_description]に示すように、AST形式の文書を入力として受け取り、AST形式の文書を出力するプログラムを途中に挟むことで変換処理のカスタマイズを実現しています。こうすることで、入力形式に依存しないカスタマイズと、カスタマイズの容易化を実現しています。スマート。
 
-![フィルターの仕組み](./img/pandoc_filter_description.pdf){#fig:pandoc_filter_description}
+![フィルターの仕組み](./img/pandoc_filter_description.png){#fig:pandoc_filter_description}
 
 フィルターに関する詳細は <https://pandoc.org/filters.html> をご覧ください。
 
@@ -102,9 +96,13 @@ Pandocは以下のような手順で文書を変換しています。(<https://g
 
 [^2]:実はPandoc単体でもMarkdown形式の文書から内部で勝手に\LaTeX を経由してPDFを生成することもできるのですが、これでは少し融通が利かない部分があったりしたので私は一度texファイルを生成してからPDFを作っています。
 
+## Pythonで表紙PDFと結合
+
+表紙PDFが指定されている場合は表紙PDFの結合も行います。ウェブアプリの利用などでも出来ますが、Pythonのライブラリ**PyPDF2**を使ってサクッと出来たのでこれも自動化しています。参考:[Python, PyPDF2でPDFを結合・分割（ファイル全体・個別ページ）](https://note.nkmk.me/python-pypdf2-pdf-merge-insert-split/)、<https://github.com/mstamy2/PyPDF2>
+
 # 方法 {#sec:houhou}
 
-以下に具体的な環境構築・レポート作成手順を示します。
+以下に具体的な環境構築・レポート作成手順を示します。(<https://github.com/detteiu8383/Markdown2PDF>から引っ張ってきていい感じにカスタマイズしてもらえると嬉しい)
 
 ## 各種インストール
 
@@ -132,24 +130,30 @@ LaTeXの環境構築はTeXLiveで行うのが多分楽だと思います。詳�
 
 ```
 ./
-  - dest
-    - output.pdf <- 生成されるPDF
-  - src
-    - img
-      - hogehoge.png <- レポートに挿入する画像
-      ...
-    - templates
-      - config.yml <- Pandocの設定ファイル
-      - template.tex <- テンプレートのtexファイル
-    references.bib <- 文献情報
-    report.md <- レポート本文のMarkdown
-  .latexmkrc <- Latexmkの設定ファイル
-  build.bat <- コマンドの自動化
+│  .latexmkrc   <- Latexmkの設定ファイル
+│  build.bat    <- コマンドの自動化
+│
+├─dest
+│      output.pdf <- 生成されるPDF
+│
+└─src
+    │  cover.pdf         <- 表紙PDF
+    │  references.bib    <- 文献情報
+    │  report.md         <- レポート本文のMarkdown
+    │
+    ├─img
+    │      pandoc_description.png <- レポートに挿入する画像
+    │      ...
+    │
+    └─templates
+            config.yml    <- Pandocの設定ファイル
+            merger.py     <- 表紙PDFが指定されている場合、これでPDFの結合をする
+            template.tex  <- テンプレートのtexファイル
 ```
 
 ### Markdownでレポート本文を書く
 
-残念ながらこの手順は手動です。頑張ってください。今回例として作成したMarkdownファイルは~~にあります。これを`report.md`として保存。
+残念ながらこの手順は手動です。頑張ってください。今回例として作成したMarkdownファイルは<https://github.com/detteiu8383/Markdown2PDF/blob/master/src/report.md>にあります。これを`report.md`として保存。
 
 ### BibTeXで文献情報をまとめる
 
@@ -213,9 +217,9 @@ pandoc --filter pandoc-crossref \
 3行目:メタデータの設定
 4行目:`report.md`を`main.tex`に変換
 
-これによって生成される`main.tex`はドキュメント部分のみ(\LaTeX の`\begin{document}`の中身部分)なので、次に示すプリアンブルを記述した`template.tex`内でこれをinputします。
+これによって生成される`main.tex`はドキュメント部分のみ(\LaTeX の`\begin{document}`の中身部分)なので、プリアンブルを記述した`template.tex`内でこれをinputします。
 
-
+私が使用している`template.tex`は<https://github.com/detteiu8383/Markdown2PDF/blob/master/src/templates/template.tex>にあるのでご覧ください。
 
 ## texファイルからLatexmkを使ってPDFを作成する
 
@@ -240,6 +244,33 @@ latexmk template.tex
 
 とコマンドを実行するだけで終わります。
 
+## Pythonで表紙PDFと結合
+
+PyPDF2を`pip install PyPDF2`でインストールし、次に示す`merger.py`を作成します。
+
+```
+import sys
+import PyPDF2
+
+args = sys.argv
+
+merger = PyPDF2.PdfFileMerger()
+
+for path in args[1:-1]:
+    merger.append(path)
+
+merger.write(args[-1])
+merger.close()
+```
+
+これで
+
+```
+python merger.py cover.pdf page1.pdf page2.pdf page3.pdf output.pdf
+```
+
+のように実行すれば、1ページ目から順に`cover.pdf`、`page1.pdf`、`page2.pdf`、`page3.pdf`が結合された`output.pdf`が生成されます。
+
 ## バッチファイルにまとめる
 
 以上の操作を次に示すバッチファイルにまとめ、コマンド実行も自動化します。
@@ -256,27 +287,32 @@ cd tmp
 pandoc --filter pandoc-crossref --top-level-division=section -M "crossrefYaml=templates\config.yml" report.md -o main.tex
 move templates\template.tex .\
 latexmk template
+python .\templates\merger.py cover.pdf template.pdf template.pdf
 move template.pdf %PROJECT_DIR%/dest/output.pdf
 cd %PROJECT_DIR%
 rd /S /Q tmp
 endlocal
 pause
 ```
+
 やっていることとしては、
 
 1. 作業用に`tmp`フォルダを作成し、`src`フォルダ内のファイルを全部コピー
 2. `tmp`フォルダ内でコンパイル
-3. 生成された`output.pdf`だけ出力用フォルダの`dest`に移動して、`tmp`フォルダは削除
+3. 12行目:表紙PDFが指定されている場合、`merger.py`でPDFの結合を行う 必要なかったら`rem`でコメントアウトするか消す
+4. 生成された`output.pdf`だけ出力用フォルダの`dest`に移動して、`tmp`フォルダは削除
 
 といった感じです。これで`dest`にできたてほかほかの`output.pdf`が産まれます。
 
+![作業の流れをまとめるとこんな感じ](./img/workflow.png){width=60%}
+
 # 結果
 
-以上の手順を用いて実際にMarkdownからPDFに変換したファイルが、今ご覧になっている**この**PDFです。変換元のMarkdownは~~~でご確認ください。
+以上の手順を用いて実際にMarkdownからPDFに変換したファイルが、今ご覧になっている**この**PDFです。変換元のMarkdownは<https://github.com/detteiu8383/Markdown2PDF/blob/master/src/report.md>でご確認ください。
 
 # 考察
 
-- コードブロックのシンタックスハイライトが上手く働いてくれていない
+- コードブロックのシンタックスハイライトと背景色変更が上手く働いてくれていない
   - \LaTeX 力が足りな過ぎてShaded環境とかHighlighting環境がちゃんと動いてない...?レポート終わったら直します。
   - (生命系の学生なのでレポートにコード貼る機会がそもそも無くてちゃんと整備していない)
 - 画像横ならべ時の画像感覚が狭い(というか0)
@@ -284,7 +320,7 @@ pause
 
 # 感想
 
-真のレポート製造機は私だったというオチ。レポート執筆部分が手動なので誰かここも自動化してください。
+真のレポート製造機は私だったというオチ。レポート執筆部分がボトルネックになっているので誰かここも自動化してください。
 
 この記事執筆時も未提出レポートが数件溜まっていて本当は記事とか書いている場合じゃないのですがせっかくのブログリレーなので書かせていただきました。未提出レポートが片付いたらもっと丁寧に書き直します。最後まで読んでくださりありがとうございます。
 
