@@ -307,7 +307,7 @@ pause
 
 といった感じです。これで`dest`にできたてほかほかの`output.pdf`が産まれます。
 
-![作業の流れをまとめるとこんな感じ](./img/workflow.png){width=60%}
+![作業の流れをまとめるとこんな感じ](./img/workflow.png){width=100%}
 
 # 結果
 
