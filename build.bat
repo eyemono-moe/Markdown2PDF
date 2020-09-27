@@ -9,8 +9,8 @@ cd tmp
 pandoc --filter pandoc-crossref --top-level-division=section -M "crossrefYaml=templates\config.yml" report.md -o main.tex
 move templates\template.tex .\
 latexmk template
-rem python .\templates\merger.py cover.pdf template.pdf template.pdf
-move template.pdf %PROJECT_DIR%/dest/output.pdf
+python .\templates\merger.py cover.pdf template.pdf output.pdf
+move output.pdf %PROJECT_DIR%/dest/output.pdf
 cd %PROJECT_DIR%
 rd /S /Q tmp
 endlocal
