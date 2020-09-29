@@ -1,4 +1,6 @@
 /sample_temp/
 /temp/
-/sample_built.bat
-/sample.md
+/sample_build.bat
+/src/sample.md
+*.ast
+/dest/sample.pdf
