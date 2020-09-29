@@ -449,14 +449,15 @@ _ _ _
 
 これらの記号でも挿入可能。
 
-\hypertarget{ux6c34ux5e73ux7ddaux306eux633fux5165ux524dux5f8cux306bux306f}{%
-\subsection{水平線の挿入前後には}\label{ux6c34ux5e73ux7ddaux306eux633fux5165ux524dux5f8cux306bux306f}}
+水平線の ***
 
-***空白行が
+挿入前には***
+
+***空白行が必要。
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
-必要。
+挿入直後には必要ない。
 ```
 
 ![](./src/img/rule_sample.png)
