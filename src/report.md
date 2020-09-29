@@ -313,11 +313,15 @@ pause
 
 以上の手順を用いて実際にMarkdownからPDFに変換したファイルが、今ご覧になっている**この**PDFです。変換元のMarkdownは<https://github.com/detteiu8383/Markdown2PDF/blob/master/src/report.md>でご確認ください。
 
+Markdownと\LaTeX のコマンドの対応は<https://github.com/detteiu8383/Markdown2PDF/blob/master/README.md#markdown%E5%BD%A2%E5%BC%8F%E3%81%A8latex-%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89%E3%81%AE%E5%AF%BE%E5%BF%9C>に示しているのでご覧ください。
+
 # 考察
 
 - コードブロックのシンタックスハイライトと背景色変更が上手く働いてくれていない
   - \LaTeX 力が足りな過ぎてShaded環境とかHighlighting環境がちゃんと動いてない...?レポート終わったら直します。
   - (生命系の学生なのでレポートにコード貼る機会がそもそも無くてちゃんと整備していない)
+- 参考文献がはみ出ている
+  - レポート終わったら直します...
 
 # 感想
 
