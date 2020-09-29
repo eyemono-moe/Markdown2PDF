@@ -16,7 +16,7 @@
   - biber
   - Latexmk
 
-## Markdown形式と$\LaTeX$ コマンドの対応
+## Markdown形式とLaTeXコマンドの対応
 
 <https://pandoc.org/MANUAL.html#Pandoc%E2%80%99s%20Markdown>を読むとより理解が深まると思います。
 
