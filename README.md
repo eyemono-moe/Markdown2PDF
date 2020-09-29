@@ -20,6 +20,8 @@
 
 <https://pandoc.org/MANUAL.html#Pandoc%E2%80%99s%20Markdown>を読むとより理解が深まると思います。
 
+---
+
 ### 本文
 
 ```.md
@@ -43,6 +45,8 @@
 ```
 
 Pandocによる日本語Markdown文書の変換時の改行・空白についてはこちらで詳しく説明されています:<https://qiita.com/zr_tex8r/items/5a62804ca493b77e793c>
+
+---
 
 ### 見出し
 
@@ -177,6 +181,8 @@ pandoc-crossrefを利用していれば`{#sec:hoge}`のようにしてラベル�
 `{-}`あるいは`{.unnumbered}`を末尾に加えると`\section*{hoge}`が使われることでナンバリングされなくなる。同時に`\addcontentsline{toc}{section}{hoge}`も挿入されるため、目次から消えることはない。
 自動で`\hypertarget{}`が付与されるので`[{{見出し文}}]`と文中に挿入するとリンクになる。
 
+---
+
 ### 装飾
 
 ```.md
@@ -203,6 +209,8 @@ Markdownなら\emph{斜体の文字}、\LaTeX なら\emph{下線付き文字}に
 
 ![](./src/img/decoration_sample.png)
 
+---
+
 ### リンク
 
 ```.md
@@ -224,6 +232,8 @@ Markdownなら\emph{斜体の文字}、\LaTeX なら\emph{下線付き文字}に
 ![](./src/img/url_sample.png)
 
 リンクは`<>`で囲んで上げないと認識されない。
+
+---
 
 ### 引用
 
@@ -248,6 +258,8 @@ Markdownなら\emph{斜体の文字}、\LaTeX なら\emph{下線付き文字}に
 ![](./src/img/quote_sample.png)
 
 引用は`quote`が使用されるが、引用のネストには対応していない。
+
+---
 
 ### リスト
 
@@ -345,6 +357,8 @@ Markdownなら\emph{斜体の文字}、\LaTeX なら\emph{下線付き文字}に
 
 と定義している。(参考:<https://qiita.com/Selene-Misso/items/6c27a4a0947f10af3119>)
 
+---
+
 ### 表
 
 ```.md
@@ -391,6 +405,8 @@ Pandocによる表の変換では`longtable`が使われる。Markdownで`:キ�
 pandoc-crossrefを利用していれば`{#tbl:hoge}`のように書くことで`[@tbl:hoge]`で相互参照が可能。
 
 pipe table、grid tableの他にもsimple tableという形式が使えたり、multiline tableで行の分割ができたりする。詳しくは<https://pandoc.org/MANUAL.html#Tables>を確認してください。
+
+---
 
 ### 水平線
 
@@ -444,6 +460,8 @@ _ _ _
 ```
 
 ![](./src/img/rule_sample.png)
+
+---
 
 ### 画像
 
@@ -523,6 +541,8 @@ _ _ _
 `<div>...</div>`で囲うと`\subfloat[]{}`によって下端揃えで並べられる。具体的な書き方は何となくわかってほしい。サイズ指定を行って横幅合計100%以下になるようにしよう。デフォルトでは中央に隙間なく寄せられてしまうので$\LaTeX$ の`\hfill`コマンドで等間隔にスペースを開けるといい感じ。
 
 pandoc-crossrefを利用していれば`{#fig:hoge}`でラベル付け、`[@fig:hoge]`で相互参照が可能。横ならべ時は`<div id="{{hoge}}">`で画像群全体のラベル付け。`<div>...</div>`内の各画像に対してもラベル付け・参照可能。
+
+---
 
 ### その他便利なコマンド
 
