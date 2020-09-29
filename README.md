@@ -176,7 +176,7 @@ Setex形式による見出しも利用可能。
 4. `\paragraph{}`
 5. `\subparagraph{}`
 
-となっている。`h6`はレベル6の見出しと認識されているが、\LaTeX に対応するコマンドが足りなくなったので文章として扱われている。(その為`######`は消えている)
+となっている。`h6`はレベル6の見出しと認識されているが、$\LaTeX$に対応するコマンドが足りなくなったので文章として扱われている(その為`######`は消えている)。
 pandoc-crossrefを利用していれば`{#sec:hoge}`のようにしてラベルを与えることができ、`[@sec:hoge]`で相互参照できる。
 `{-}`あるいは`{.unnumbered}`を末尾に加えると`\section*{hoge}`が使われることでナンバリングされなくなる。同時に`\addcontentsline{toc}{section}{hoge}`も挿入されるため、目次から消えることはない。
 自動で`\hypertarget{}`が付与されるので`[{{見出し文}}]`と文中に挿入するとリンクになる。
@@ -449,14 +449,15 @@ _ _ _
 
 これらの記号でも挿入可能。
 
-\hypertarget{ux6c34ux5e73ux7ddaux306eux633fux5165ux524dux5f8cux306bux306f}{%
-\subsection{水平線の挿入前後には}\label{ux6c34ux5e73ux7ddaux306eux633fux5165ux524dux5f8cux306bux306f}}
+水平線の ***
 
-***空白行が
+挿入前には***
+
+***空白行が必要。
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
-必要。
+挿入直後には必要ない。
 ```
 
 ![](./src/img/rule_sample.png)
@@ -534,7 +535,7 @@ _ _ _
 
 ![](./src/img/image_sample_0.png)
 
-通常のMarkdown同様に画像の挿入ができる。上に示したフォーマット以外ではepsなども挿入できる。挿入行の末尾に`{width=50%}`と書けば本文横幅の50%の大きさで挿入される(縦横比を保つために<https://github.com/detteiu8383/Markdown2PDF/blob/d3957576c6f298a215e00839336d5ec1164e40f2/src/templates/template.tex#L37>の記述が必要)。
+通常のMarkdown同様に画像の挿入ができる。上に示したフォーマット以外ではepsなども挿入できる。挿入行の末尾に`{width=50%}`と書けば本文横幅の50%の大きさで挿入される(縦横比を保つために<https://github.com/detteiu8383/Markdown2PDF/blob/d3957576c6f298a215e00839336d5ec1164e40f2/src/templates/template.tex#L37-L42>の記述が必要)。
 
 ![](./src/img/image_sample_1.png)
 
