@@ -48,6 +48,20 @@
 
 Pandocによる日本語Markdown文書の変換時の改行・空白についてはこちらで詳しく説明されています:<https://qiita.com/zr_tex8r/items/5a62804ca493b77e793c>
 
+<details><summary>LaTeX変換結果</summary><div>
+
+```.tex
+ここは本文です。適当な文章が思いつかない。
+
+空白行を挟むと別の段落になります。普通に一度改行しても改行されません(ここに改行→)
+文末に2つの半角スペースを挿入した場合、その時点で改行されますが段落は変わりません(ここに2つの半角スペース→)\\
+本文の途中に半角スペースを1つ挿入すると→
+←無視されます。本文の途中に半角スペースを複数挿入しても→
+←無視されます。全角スペースを挿入した場合は→　　　　←ちゃんと空きます。
+```
+
+</div></details>
+
 ---
 
 ### 見出し
@@ -103,6 +117,24 @@ Setex形式による見出しも利用可能。
 ```
 
 ↓Pandocで変換
+
+![見出しの例](./src/img/headline_sample.png)
+
+見出しのトップレベルは変換時のオプション`--top-level-division={{トップレベル}}`で変更可能。上の例は`section`にしている。`part`, `chapter`, `section`, `default`が利用可能。
+
+この例では`h1`から順に
+1. `\section{}`
+2. `\subsection{}`
+3. `\subsubsection{}`
+4. `\paragraph{}`
+5. `\subparagraph{}`
+
+となっている。`h6`はレベル6の見出しと認識されているが、LaTeXに対応するコマンドが足りなくなったので文章として扱われている(その為`######`は消えている)。
+pandoc-crossrefを利用していれば`{#sec:hoge}`のようにしてラベルを与えることができ、`[@sec:hoge]`で相互参照できる。
+`{-}`あるいは`{.unnumbered}`を末尾に加えると`\section*{hoge}`が使われることでナンバリングされなくなる。同時に`\addcontentsline{toc}{section}{hoge}`も挿入されるため、目次から消えることはない。
+自動で`\hypertarget{}`が付与されるので`[{{見出し文}}]`と文中に挿入するとリンクになる。
+
+<details><summary>LaTeX変換結果</summary><div>
 
 ```.tex
 \hypertarget{h1-ux898bux51faux30571}{%
@@ -167,21 +199,7 @@ Setex形式による見出しも利用可能。
 の直後に空白行がない場合は見出しになる。
 ```
 
-![見出しの例](./src/img/headline_sample.png)
-
-見出しのトップレベルは変換時のオプション`--top-level-division={{トップレベル}}`で変更可能。上の例は`section`にしている。`part`, `chapter`, `section`, `default`が利用可能。
-
-この例では`h1`から順に
-1. `\section{}`
-2. `\subsection{}`
-3. `\subsubsection{}`
-4. `\paragraph{}`
-5. `\subparagraph{}`
-
-となっている。`h6`はレベル6の見出しと認識されているが、LaTeXに対応するコマンドが足りなくなったので文章として扱われている(その為`######`は消えている)。
-pandoc-crossrefを利用していれば`{#sec:hoge}`のようにしてラベルを与えることができ、`[@sec:hoge]`で相互参照できる。
-`{-}`あるいは`{.unnumbered}`を末尾に加えると`\section*{hoge}`が使われることでナンバリングされなくなる。同時に`\addcontentsline{toc}{section}{hoge}`も挿入されるため、目次から消えることはない。
-自動で`\hypertarget{}`が付与されるので`[{{見出し文}}]`と文中に挿入するとリンクになる。
+</div></details>
 
 ---
 
@@ -199,6 +217,10 @@ Markdownなら*斜体の文字*、\LaTeX なら*下線付き文字*になる。P
 
 ↓Pandocで変換
 
+![装飾の例](./src/img/decoration_sample.png)
+
+<details><summary>LaTeX変換結果</summary><div>
+
 ```.tex
 Markdownなら\emph{斜体の文字}、\LaTeX なら\emph{下線付き文字}になる。Pandocでは\texttt{\_}を用いた強調は\_使用できない\_。
 
@@ -209,7 +231,7 @@ Markdownなら\emph{斜体の文字}、\LaTeX なら\emph{下線付き文字}に
 \textsc{You can also use small caps.}
 ```
 
-![装飾の例](./src/img/decoration_sample.png)
+</div></details>
 
 ---
 
@@ -225,15 +247,19 @@ Markdownなら\emph{斜体の文字}、\LaTeX なら\emph{下線付き文字}に
 
 ↓Pandocで変換
 
+![リンクの例](./src/img/url_sample.png)
+
+リンクは`<>`で囲んで上げないと認識されない。
+
+<details><summary>LaTeX変換結果</summary><div>
+
 ```.tex
 明示したリンク \url{https://trap.jp/post/1123/}
 \href{https://trap.jp/post/1123/}{タイトル付きのリンク}
 自動リンク https://trap.jp/post/1123/
 ```
 
-![リンクの例](./src/img/url_sample.png)
-
-リンクは`<>`で囲んで上げないと認識されない。
+</div></details>
 
 ---
 
@@ -250,6 +276,12 @@ Markdownなら\emph{斜体の文字}、\LaTeX なら\emph{下線付き文字}に
 
 ↓Pandocで変換
 
+![引用の例](./src/img/quote_sample.png)
+
+引用は`quote`が使用されるが、引用のネストには対応していない。
+
+<details><summary>LaTeX変換結果</summary><div>
+
 ```.tex
 ここは本文です。
 
@@ -261,9 +293,7 @@ Markdownなら\emph{斜体の文字}、\LaTeX なら\emph{下線付き文字}に
 ここも本文です。
 ```
 
-![引用の例](./src/img/quote_sample.png)
-
-引用は`quote`が使用されるが、引用のネストには対応していない。
+</div></details>
 
 ---
 
@@ -290,6 +320,49 @@ Markdownなら\emph{斜体の文字}、\LaTeX なら\emph{下線付き文字}に
 ```
 
 ↓Pandocで変換
+
+![リストの例](./src/img/list_sample.png)
+
+リストを挿入すると`\tightlist`というコマンドが使われる。が、これはLaTeX には存在しないので適当なところで定義してあげる必要がある。私は`template.tex`で
+
+```
+\def\tightlist{\itemsep1pt\parskip0pt\parsep0pt}
+```
+
+と定義している。(参考:<https://qiita.com/Selene-Misso/items/6c27a4a0947f10af3119>)
+
+Pandocにはfancy_listsという拡張があるので、順序付きリストのマークとしてアルファベット(大文字/小文字)、ローマ数字(大文字/小文字)も利用できる。(参考:<https://pandoc.org/MANUAL.html#ordered-lists>)
+
+```.md
+A)  ナンバリングタイトル
+    a)  ロト三部作
+        I.  ドラゴンクエスト
+        I.  ドラゴンクエストII 悪霊の神々
+        I.  ドラゴンクエストIII そして伝説へ…
+    a)  天空三部作
+        IV.  ドラゴンクエストIV 導かれし者たち
+        I.  ドラゴンクエストV 天空の花嫁
+        I.  ドラゴンクエストVI 幻の大地
+    a)  シリーズ作品ではないナンバリングタイトル
+        VII.  ドラゴンクエストVII エデンの戦士たち
+        I.  ドラゴンクエストVIII 空と海と大地と呪われし姫君
+        I.  ドラゴンクエストIX 星空の守り人
+        I.  ドラゴンクエストX 目覚めし五つの種族 オンライン
+        I.  ドラゴンクエストXI 過ぎ去りし時を求めて
+A)  派生作品
+    a)  ドラゴンクエストモンスターズ
+        1.  ドラゴンクエストモンスターズ テリーのワンダーランド
+        2.  ドラゴンクエストモンスターズ2 マルタのふしぎな鍵
+        3.  ...
+    a)  ドラゴンクエストビルダーズ
+        1.  ...
+```
+
+が↓になる
+
+![さらに空気を読んでくれるリストの例](./src/img/fancy_lists_sample.png)
+
+<details><summary>LaTeX変換結果</summary><div>
 
 ```.tex
 \begin{itemize}
@@ -353,46 +426,7 @@ Markdownなら\emph{斜体の文字}、\LaTeX なら\emph{下線付き文字}に
 \end{enumerate}
 ```
 
-![リストの例](./src/img/list_sample.png)
-
-リストを挿入すると`\tightlist`というコマンドが使われる。が、これはLaTeX には存在しないので適当なところで定義してあげる必要がある。私は`template.tex`で
-
-```
-\def\tightlist{\itemsep1pt\parskip0pt\parsep0pt}
-```
-
-と定義している。(参考:<https://qiita.com/Selene-Misso/items/6c27a4a0947f10af3119>)
-
-Pandocにはfancy_listsという拡張があるので、順序付きリストのマークとしてアルファベット(大文字/小文字)、ローマ数字(大文字/小文字)も利用できる。(参考:<https://pandoc.org/MANUAL.html#ordered-lists>)
-
-```.md
-A)  ナンバリングタイトル
-    a)  ロト三部作
-        I.  ドラゴンクエスト
-        I.  ドラゴンクエストII 悪霊の神々
-        I.  ドラゴンクエストIII そして伝説へ…
-    a)  天空三部作
-        IV.  ドラゴンクエストIV 導かれし者たち
-        I.  ドラゴンクエストV 天空の花嫁
-        I.  ドラゴンクエストVI 幻の大地
-    a)  シリーズ作品ではないナンバリングタイトル
-        VII.  ドラゴンクエストVII エデンの戦士たち
-        I.  ドラゴンクエストVIII 空と海と大地と呪われし姫君
-        I.  ドラゴンクエストIX 星空の守り人
-        I.  ドラゴンクエストX 目覚めし五つの種族 オンライン
-        I.  ドラゴンクエストXI 過ぎ去りし時を求めて
-A)  派生作品
-    a)  ドラゴンクエストモンスターズ
-        1.  ドラゴンクエストモンスターズ テリーのワンダーランド
-        2.  ドラゴンクエストモンスターズ2 マルタのふしぎな鍵
-        3.  ...
-    a)  ドラゴンクエストビルダーズ
-        1.  ...
-```
-
-が↓になる
-
-![さらに空気を読んでくれるリストの例](./src/img/fancy_lists_sample.png)
+</div></details>
 
 ---
 
@@ -412,6 +446,15 @@ A)  派生作品
 ```
 
 ↓Pandocで変換
+
+![表の例](./src/img/table_sample.png)
+
+Pandocによる表の変換では`longtable`が使われる。Markdownで`:キャプション`のようにコロンで始まる行(あるいは`Table:`で始まる行)を追加することでキャプションをつけることができる。
+pandoc-crossrefを利用していれば`{#tbl:hoge}`のように書くことで`[@tbl:hoge]`で相互参照が可能。
+
+pipe table、grid tableの他にもsimple tableという形式が使えたり、multiline tableで行の分割ができたりする。詳しくは<https://pandoc.org/MANUAL.html#tables>を確認してください。
+
+<details><summary>LaTeX変換結果</summary><div>
 
 ```.tex
 \hypertarget{tbl:precure}{}
@@ -436,12 +479,7 @@ A)  派生作品
 表~\ref{tbl:precure}に、スマイルプリキュア！に登場するキャラクターを示す。
 ```
 
-![表の例](./src/img/table_sample.png)
-
-Pandocによる表の変換では`longtable`が使われる。Markdownで`:キャプション`のようにコロンで始まる行(あるいは`Table:`で始まる行)を追加することでキャプションをつけることができる。
-pandoc-crossrefを利用していれば`{#tbl:hoge}`のように書くことで`[@tbl:hoge]`で相互参照が可能。
-
-pipe table、grid tableの他にもsimple tableという形式が使えたり、multiline tableで行の分割ができたりする。詳しくは<https://pandoc.org/MANUAL.html#tables>を確認してください。
+</div></details>
 
 ---
 
@@ -473,6 +511,10 @@ _ _ _
 
 ↓Pandocで変換
 
+![水平線の例](./src/img/rule_sample.png)
+
+<details><summary>LaTeX変換結果</summary><div>
+
 ```.tex
 水平線を挿入する↓
 
@@ -497,7 +539,7 @@ _ _ _
 挿入直後には必要ない。
 ```
 
-![水平線の例](./src/img/rule_sample.png)
+</div></details>
 
 ---
 
@@ -531,6 +573,18 @@ _ _ _
 ```
 
 ↓Pandocで変換
+
+![画像挿入の例](./src/img/image_sample_0.png)
+
+通常のMarkdown同様に画像の挿入ができる。上に示したフォーマット以外ではepsなども挿入できる。挿入行の末尾に`{width=50%}`と書けば本文横幅の50%の大きさで挿入される(縦横比を保つために<https://github.com/detteiu8383/Markdown2PDF/blob/d3957576c6f298a215e00839336d5ec1164e40f2/src/templates/template.tex#L37-L42>の記述が必要)。
+
+![画像横ならべの例](./src/img/image_sample_1.png)
+
+`<div>...</div>`で囲うと`\subfloat[]{}`によって下端揃えで並べられる。具体的な書き方は何となくわかってほしい。サイズ指定を行って横幅合計100%以下になるようにしよう。デフォルトでは中央に隙間なく寄せられてしまうのでLaTeX の`\hspace{}`や`\hfill`コマンドでスペースを開けるといい感じ。
+
+pandoc-crossrefを利用していれば`{#fig:hoge}`でラベル付け、`[@fig:hoge]`で相互参照が可能。横ならべ時は`<div id="{{hoge}}">`で画像群全体のラベル付け。`<div>...</div>`内の各画像に対してもラベル付け・参照可能。
+
+<details><summary>LaTeX変換結果</summary><div>
 
 ```.tex
 \begin{figure}
@@ -570,15 +624,7 @@ _ _ _
 図~\ref{fig:narabi}に、各画像挿入結果を示す。
 ```
 
-![画像挿入の例](./src/img/image_sample_0.png)
-
-通常のMarkdown同様に画像の挿入ができる。上に示したフォーマット以外ではepsなども挿入できる。挿入行の末尾に`{width=50%}`と書けば本文横幅の50%の大きさで挿入される(縦横比を保つために<https://github.com/detteiu8383/Markdown2PDF/blob/d3957576c6f298a215e00839336d5ec1164e40f2/src/templates/template.tex#L37-L42>の記述が必要)。
-
-![画像横ならべの例](./src/img/image_sample_1.png)
-
-`<div>...</div>`で囲うと`\subfloat[]{}`によって下端揃えで並べられる。具体的な書き方は何となくわかってほしい。サイズ指定を行って横幅合計100%以下になるようにしよう。デフォルトでは中央に隙間なく寄せられてしまうのでLaTeX の`\hspace{}`や`\hfill`コマンドでスペースを開けるといい感じ。
-
-pandoc-crossrefを利用していれば`{#fig:hoge}`でラベル付け、`[@fig:hoge]`で相互参照が可能。横ならべ時は`<div id="{{hoge}}">`で画像群全体のラベル付け。`<div>...</div>`内の各画像に対してもラベル付け・参照可能。
+</div></details>
 
 ---
 
@@ -598,6 +644,12 @@ pandoc-crossrefを利用していれば`{#fig:hoge}`でラベル付け、`[@fig:
 
 ↓Pandocで変換
 
+![脚注の例](./src/img/footnote_sample.png)
+
+通常のMarkdownの脚注機能が使える。上の例で複数箇所に`[^amamiya]`と記述しても1つの脚注にリンクはせず、同内容の脚注が何個も書かれてしまうため、複数個所で同内容を参照したい場合はLaTeXコマンドの`\footnotemark[{{番号}}]`を用いる。
+
+<details><summary>LaTeX変換結果</summary><div>
+
 ```.tex
 脚注も利用することができる\footnote{このように脚注が表示される。}。
 
@@ -606,9 +658,7 @@ pandoc-crossrefを利用していれば`{#fig:hoge}`でラベル付け、`[@fig:
 雨宮くん\footnotemark[2]は南みれぃよりも背が低く、立ち振る舞いからも後輩であると勘違いしがちだが、普通にみれぃと同級生である。
 ```
 
-![脚注の例](./src/img/footnote_sample.png)
-
-通常のMarkdownの脚注機能が使える。上の例で複数箇所に`[^amamiya]`と記述しても1つの脚注にリンクはせず、同内容の脚注が何個も書かれてしまうため、複数個所で同内容を参照したい場合はLaTeXコマンドの`\footnotemark[{{番号}}]`を用いる。
+</div></details>
 
 ### その他便利なコマンド
 
