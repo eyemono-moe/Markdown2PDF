@@ -176,7 +176,7 @@ Setex形式による見出しも利用可能。
 4. `\paragraph{}`
 5. `\subparagraph{}`
 
-となっている。`h6`はレベル6の見出しと認識されているが、$\LaTeX$に対応するコマンドが足りなくなったので文章として扱われている(その為`######`は消えている)。
+となっている。`h6`はレベル6の見出しと認識されているが、LaTeXに対応するコマンドが足りなくなったので文章として扱われている(その為`######`は消えている)。
 pandoc-crossrefを利用していれば`{#sec:hoge}`のようにしてラベルを与えることができ、`[@sec:hoge]`で相互参照できる。
 `{-}`あるいは`{.unnumbered}`を末尾に加えると`\section*{hoge}`が使われることでナンバリングされなくなる。同時に`\addcontentsline{toc}{section}{hoge}`も挿入されるため、目次から消えることはない。
 自動で`\hypertarget{}`が付与されるので`[{{見出し文}}]`と文中に挿入するとリンクになる。
@@ -349,7 +349,7 @@ Markdownなら\emph{斜体の文字}、\LaTeX なら\emph{下線付き文字}に
 
 ![](./src/img/list_sample.png)
 
-リストを挿入すると`\tightlist`というコマンドが使われる。が、これは\LaTeX には存在しないので適当なところで定義してあげる必要がある。私は`template.tex`で
+リストを挿入すると`\tightlist`というコマンドが使われる。が、これはLaTeX には存在しないので適当なところで定義してあげる必要がある。私は`template.tex`で
 
 ```
 \def\tightlist{\itemsep1pt\parskip0pt\parsep0pt}
