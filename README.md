@@ -48,6 +48,8 @@ Pandocによる日本語Markdown文書の変換時の改行・空白について
 
 ---
 
+![本文の例](./src/img/text_sample.png)
+
 ### 見出し
 
 ```.md
@@ -165,7 +167,7 @@ Setex形式による見出しも利用可能。
 の直後に空白行がない場合は見出しになる。
 ```
 
-![](./src/img/headline_sample.png)
+![見出しの例](./src/img/headline_sample.png)
 
 見出しのトップレベルは変換時のオプション`--top-level-division={{トップレベル}}`で変更可能。上の例は`section`にしている。`part`, `chapter`, `section`, `default`が利用可能。
 
@@ -207,7 +209,7 @@ Markdownなら\emph{斜体の文字}、\LaTeX なら\emph{下線付き文字}に
 \textsc{You can also use small caps.}
 ```
 
-![](./src/img/decoration_sample.png)
+![装飾の例](./src/img/decoration_sample.png)
 
 ---
 
@@ -229,7 +231,7 @@ Markdownなら\emph{斜体の文字}、\LaTeX なら\emph{下線付き文字}に
 自動リンク https://trap.jp/post/1123/
 ```
 
-![](./src/img/url_sample.png)
+![リンクの例](./src/img/url_sample.png)
 
 リンクは`<>`で囲んで上げないと認識されない。
 
@@ -259,7 +261,7 @@ Markdownなら\emph{斜体の文字}、\LaTeX なら\emph{下線付き文字}に
 ここも本文です。
 ```
 
-![](./src/img/quote_sample.png)
+![引用の例](./src/img/quote_sample.png)
 
 引用は`quote`が使用されるが、引用のネストには対応していない。
 
@@ -351,7 +353,7 @@ Markdownなら\emph{斜体の文字}、\LaTeX なら\emph{下線付き文字}に
 \end{enumerate}
 ```
 
-![](./src/img/list_sample.png)
+![リストの例](./src/img/list_sample.png)
 
 リストを挿入すると`\tightlist`というコマンドが使われる。が、これはLaTeX には存在しないので適当なところで定義してあげる必要がある。私は`template.tex`で
 
@@ -360,6 +362,37 @@ Markdownなら\emph{斜体の文字}、\LaTeX なら\emph{下線付き文字}に
 ```
 
 と定義している。(参考:<https://qiita.com/Selene-Misso/items/6c27a4a0947f10af3119>)
+
+Pandocにはfancy_listsという拡張があるので、順序付きリストのマークとしてアルファベット(大文字/小文字)、ローマ数字(大文字/小文字)も利用できる。(参考:<https://pandoc.org/MANUAL.html#ordered-lists>)
+
+```.md
+A)  ナンバリングタイトル
+    a)  ロト三部作
+        I.  ドラゴンクエスト
+        I.  ドラゴンクエストII 悪霊の神々
+        I.  ドラゴンクエストIII そして伝説へ…
+    a)  天空三部作
+        IV.  ドラゴンクエストIV 導かれし者たち
+        I.  ドラゴンクエストV 天空の花嫁
+        I.  ドラゴンクエストVI 幻の大地
+    a)  シリーズ作品ではないナンバリングタイトル
+        VII.  ドラゴンクエストVII エデンの戦士たち
+        I.  ドラゴンクエストVIII 空と海と大地と呪われし姫君
+        I.  ドラゴンクエストIX 星空の守り人
+        I.  ドラゴンクエストX 目覚めし五つの種族 オンライン
+        I.  ドラゴンクエストXI 過ぎ去りし時を求めて
+A)  派生作品
+    a)  ドラゴンクエストモンスターズ
+        1.  ドラゴンクエストモンスターズ テリーのワンダーランド
+        2.  ドラゴンクエストモンスターズ2 マルタのふしぎな鍵
+        3.  ...
+    a)  ドラゴンクエストビルダーズ
+        1.  ...
+```
+
+が↓になる
+
+![さらに空気を読んでくれるリストの例](./src/img/fancy_lists_sample.png)
 
 ---
 
@@ -403,7 +436,7 @@ Markdownなら\emph{斜体の文字}、\LaTeX なら\emph{下線付き文字}に
 表~\ref{tbl:precure}に、スマイルプリキュア！に登場するキャラクターを示す。
 ```
 
-![](./src/img/table_sample.png)
+![表の例](./src/img/table_sample.png)
 
 Pandocによる表の変換では`longtable`が使われる。Markdownで`:キャプション`のようにコロンで始まる行(あるいは`Table:`で始まる行)を追加することでキャプションをつけることができる。
 pandoc-crossrefを利用していれば`{#tbl:hoge}`のように書くことで`[@tbl:hoge]`で相互参照が可能。
@@ -464,7 +497,7 @@ _ _ _
 挿入直後には必要ない。
 ```
 
-![](./src/img/rule_sample.png)
+![水平線の例](./src/img/rule_sample.png)
 
 ---
 
@@ -537,11 +570,11 @@ _ _ _
 図~\ref{fig:narabi}に、各画像挿入結果を示す。
 ```
 
-![](./src/img/image_sample_0.png)
+![画像挿入の例](./src/img/image_sample_0.png)
 
 通常のMarkdown同様に画像の挿入ができる。上に示したフォーマット以外ではepsなども挿入できる。挿入行の末尾に`{width=50%}`と書けば本文横幅の50%の大きさで挿入される(縦横比を保つために<https://github.com/detteiu8383/Markdown2PDF/blob/d3957576c6f298a215e00839336d5ec1164e40f2/src/templates/template.tex#L37-L42>の記述が必要)。
 
-![](./src/img/image_sample_1.png)
+![画像横ならべの例](./src/img/image_sample_1.png)
 
 `<div>...</div>`で囲うと`\subfloat[]{}`によって下端揃えで並べられる。具体的な書き方は何となくわかってほしい。サイズ指定を行って横幅合計100%以下になるようにしよう。デフォルトでは中央に隙間なく寄せられてしまうのでLaTeX の`\hspace{}`や`\hfill`コマンドでスペースを開けるといい感じ。
 
@@ -573,7 +606,7 @@ pandoc-crossrefを利用していれば`{#fig:hoge}`でラベル付け、`[@fig:
 雨宮くん\footnotemark[2]は南みれぃよりも背が低く、立ち振る舞いからも後輩であると勘違いしがちだが、普通にみれぃと同級生である。
 ```
 
-![](./src/img/footnote_sample.png)
+![脚注の例](./src/img/footnote_sample.png)
 
 通常のMarkdownの脚注機能が使える。上の例で複数箇所に`[^amamiya]`と記述しても1つの脚注にリンクはせず、同内容の脚注が何個も書かれてしまうため、複数個所で同内容を参照したい場合はLaTeXコマンドの`\footnotemark[{{番号}}]`を用いる。
 
