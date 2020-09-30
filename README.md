@@ -44,11 +44,11 @@
 ←無視されます。全角スペースを挿入した場合は→　　　　←ちゃんと空きます。
 ```
 
+![本文の例](./src/img/text_sample.png)
+
 Pandocによる日本語Markdown文書の変換時の改行・空白についてはこちらで詳しく説明されています:<https://qiita.com/zr_tex8r/items/5a62804ca493b77e793c>
 
 ---
-
-![本文の例](./src/img/text_sample.png)
 
 ### 見出し
 
