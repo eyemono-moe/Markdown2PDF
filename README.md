@@ -249,10 +249,14 @@ Markdownなら\emph{斜体の文字}、\LaTeX なら\emph{下線付き文字}に
 ↓Pandocで変換
 
 ```.tex
+ここは本文です。
+
 \begin{quote}
-これは引用文です \textgreater{} 引用のネストも可能
-\textgreater\textgreater{} さらなるネストもできます
+これは引用文です。 \textgreater{} Markdownなら引用のネストができるけど
+\LaTeX ではできません。
 \end{quote}
+
+ここも本文です。
 ```
 
 ![](./src/img/quote_sample.png)
