@@ -539,7 +539,15 @@ _ _ _
 ![画像の挿入](./img/post_image.png){#fig:post_image}
 
 [@fig:post_image]に示した画像はブログ記事のトップ画像である。
+```
 
+↓Pandocで変換
+
+![画像挿入の例](./src/img/image_sample_0.png)
+
+通常のMarkdown同様に画像の挿入ができる。上に示したフォーマット以外ではepsなども挿入できる。挿入行の末尾に`{width=50%}`と書けば本文横幅の50%の大きさで挿入される(縦横比を保つために<https://github.com/detteiu8383/Markdown2PDF/blob/d3957576c6f298a215e00839336d5ec1164e40f2/src/templates/template.tex#L37-L42>の記述が必要)。
+
+```.md
 <div id="fig:narabi">
 ![png画像の挿入](./img/sample_image.png){#fig:png width=60%}
 
@@ -547,7 +555,7 @@ _ _ _
 ![jpg画像の挿入](./img/sample_image.jpg){#fig:jpg width=40%}
 
 ![](./img/mitsu.png){width=15%}
-![](./img/mitsu.png){#fig:mitsu width=20%}
+![](./img/mitsu.png){width=20%}
 ![](./img/mitsu.png){width=15%}
 ![](./img/mitsu.png){width=10%}
 
@@ -563,10 +571,6 @@ _ _ _
 ```
 
 ↓Pandocで変換
-
-![画像挿入の例](./src/img/image_sample_0.png)
-
-通常のMarkdown同様に画像の挿入ができる。上に示したフォーマット以外ではepsなども挿入できる。挿入行の末尾に`{width=50%}`と書けば本文横幅の50%の大きさで挿入される(縦横比を保つために<https://github.com/detteiu8383/Markdown2PDF/blob/d3957576c6f298a215e00839336d5ec1164e40f2/src/templates/template.tex#L37-L42>の記述が必要)。
 
 ![画像横ならべの例](./src/img/image_sample_1.png)
 
