@@ -18,7 +18,7 @@
 
 ## Markdown形式とLaTeX コマンドの対応
 
-<https://pandoc.org/MANUAL.html#Pandoc%E2%80%99s%20Markdown>を読むとより理解が深まると思います。
+<https://pandoc.org/MANUAL.html#pandocs-markdown>を読むとより理解が深まると思います。
 
 ---
 
