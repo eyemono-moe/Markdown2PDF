@@ -545,7 +545,7 @@ _ _ _
 
 ![画像挿入の例](./src/img/image_sample_0.png)
 
-通常のMarkdown同様に画像の挿入ができる。上に示したフォーマット以外ではepsなども挿入できる。挿入行の末尾に`{width=50%}`と書けば本文横幅の50%の大きさで挿入される(縦横比を保つために<https://github.com/detteiu8383/Markdown2PDF/blob/d3957576c6f298a215e00839336d5ec1164e40f2/src/templates/template.tex#L37-L42>の記述が必要)。
+通常のMarkdown同様に画像の挿入ができる。上に示したフォーマット以外ではepsなども挿入できる。挿入行の末尾に`{width=50%}`と書けば本文横幅の50%の大きさで挿入される(縦横比を保つために<https://github.com/detteiu8383/Markdown2PDF/blob/d3957576c6f298a215e00839336d5ec1164e40f2/src/templates/template.tex#L37-L42>の記述が必要)。画像挿入直前に`\captionsetup{labelformat=empty,labelsep=none}`と書けば`図1:`の部分を消すことができる。ただしこの場合表示されなくなっているだけで相互参照の番号は設定されているので、参照すれば`図1`と参照されるし、この次に挿入した図は`図2`になる。
 
 ```.md
 <div id="fig:narabi">
